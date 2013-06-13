@@ -30,16 +30,18 @@ ECHO Current version= 0.1
 ECHO ...............................................
 ECHO.
 ECHO 1 - Install/Update a server
-ECHO 2 - Delete a Server installation
-ECHO 3 - Backup an existing installation
-ECHO 4 - About NSSM
+ECHO 2 - Start a Server
+ECHO 3 - Delete a Server installation
+ECHO 4 - Backup an existing installation
+ECHO 5 - About NSSM
 ECHO exit - Exit
 ECHO.
 SET /P M=Type 1, 2, or 3, then press ENTER: 
 IF %M%==1 GOTO INSTALL/UPDATE
-IF %M%==2 GOTO 404
+IF %M%==2 GOTO EXECUTE
 IF %M%==3 GOTO 404
-IF %M%==4 GOTO ABOUT
+IF %M%==4 GOTO 404
+IF %M$==5 GOTO ABOUT
 IF %M%==exit GOTO EOS
 IF %M%==42 GOTO ANSWER
 :INSTALL/UPDATE
@@ -119,7 +121,86 @@ steamcmd +login anonymous +force_install_dir "C:\Servers\%steamcmdname%\ app_upd
 echo %steamcmdname% has been successfully installed/updated to the directory "C:\Servers\%steamcmdname%\".
 pause
 goto MENU
+:EXECUTE
+ECHO.
+How would you like your server to execute?
+echo.
+echo 1 - Normal Options
+echo 2 - Custom Options
+set /p execoptions=Select which mode: 
+IF %execoptions%==1 GOTO SERVEREXECUTE
+IF %execoptions%==2 GOTO CUSTOMEXECUTE
+:SERVEREXECUTE
+set tfoptions=-console -port 27015 -game teamfortress2 +map ctf_2fort +maxplayers 16 -verify_all
+set gmodoptions=-console -port 27016 -game garrysmod +map gm_construct +maxplayers 16 -verify_all
+set cssoptions=-console -port 27017 -game counterstrikesource +map de_dust +maxplayers 16 -verify_all
+set csgooptions=-console -port 27018 -game csgo +map de_nuke +maxplayers 16 -verify_all
+goto actualexecute
+:customexecute
+cls
+echo.
+echo These options are for custom execution of servers.
+echo.
+set /p servername=Server Name? 
+set /p serverdir=Directory leading to srcds.exe
+set /p serverport=Port? 
+set /p servermap=Map? 
+set /p serverplayers=Max Players? 
+echo Those are all the options. Executing server...
+cd %serverdir%
+srcds.exe -console -game %servername% -port %serverport% +map %servermap% +maxplayers %serverplayers% -verify_all
+echo.
+echo The server has been executed (Hopefully Successfully).
+pause
+goto MENU
+:ACTUALEXECUTE
+ECHO.
+ECHO Current Supported Servers:
+echo 1 - Team Fortress 2
+echo 2 - Garry's Mod
+echo 3 - Counter-Strike: Source
+echo 4 - Counter-Strike: Global Offensive
+echo 5 - Other
+set /p serverexec=What server would you like to execute? 
+IF %serverexec%==1 GOTO tf2exec
+IF %serverexec%==2 GOTO gmodexec
+IF %serverexec%==3 GOTO cssexec
+IF %serverexec%==4 GOTO csgoexec
+IF %serverexec%==5 GOTO 404
+:tf2exec
+cls
+cd "C:\servers\team fortress 2\"
+srcds.exe -console -port 27015 -game teamfortress2 +map ctf_2fort +maxplayers 16 -verify_all
+echo.
+echo Team Fortress 2 Dedicated Server has been launched.
+pause
+goto menu
+:gmodexec
+cls
+cd "C:\servers\garry's mod\"
+srcds.exe -console -port 27015 -game garry's mod +map gm_construct +maxplayers 32 -verify_all
+echo.
+echo Garry's Mod Dedicated Server has been launched
+pause
+goto menu
+:cssexec
+cls
+cd "C:\servers\counter-strike: source\"
+srcds.exe -console -port 27017 -game counterstrikesource +map de_dust2 +maxplayers 16 -verify_all
+echo.
+echo Counter-Strike: Source Dedicated Server has been launched.
+pause
+goto menu
+:csgoexec
+cls
+cd "C:\servers\counter-strike: global offensive\"
+srcds.exe -console -game csgo +map de_nuke +maxplayers 16 -verify_all
+echo.
+echo Counter-Strike: Global Offensive Dedicated Server has been launched.
+pause
+goto menu
 :404
+cls
 echo.
 echo Sorry, this feature is not done yet. You will be returned to the main menu.
 pause
