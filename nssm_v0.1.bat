@@ -1,0 +1,143 @@
+@ECHO OFF
+CLS
+
+
+::Change this variable to change the location of the SteamCMD installation!
+set steamcmddir=C:\Program Files (x86)\SteamCMD\
+
+
+set programname=neXus Source Server Manager v0.1
+color a
+echo.
+echo ##########################################################
+echo # This program requires SteamCMD to be in the directory: #
+echo # "C:\Program Files (x86)\SteamCMD". If it is not there, #
+echo # this program will not work properly without moving it  #
+echo # there, or changing the variable in the batch file. If  #
+echo # SteamCMD is not in that directory, please do either of #
+echo # the two options before using this program. Thank you.  #
+echo ##########################################################
+pause
+:MENU
+cls
+ECHO.
+ECHO ...............................................
+ECHO Welcome to the neXus Source Server Manager. Select your task below.
+ECHO.
+ECHO Note- during any menu, type "home" to return to this menu.
+ECHO.
+ECHO Current version= 0.1
+ECHO ...............................................
+ECHO.
+ECHO 1 - Install/Update a server
+ECHO 2 - Delete a Server installation
+ECHO 3 - Backup an existing installation
+ECHO 4 - About NSSM
+ECHO exit - Exit
+ECHO.
+SET /P M=Type 1, 2, or 3, then press ENTER: 
+IF %M%==1 GOTO INSTALL/UPDATE
+IF %M%==2 GOTO 404
+IF %M%==3 GOTO 404
+IF %M%==4 GOTO ABOUT
+IF %M%==exit GOTO EOS
+IF %M%==42 GOTO ANSWER
+:INSTALL/UPDATE
+cls
+ECHO.
+ECHO What server would you like to install?
+echo.
+ECHO 1 - Team Fortress 2
+ECHO 2 - Garry's Mod
+ECHO 3 - Counter-Strike: Source
+ECHO 4 - Counter-Strike: Global Offensive
+ECHO 5 - Other
+SET /P SERVER=Type the number of the option you would like to install, then press ENTER.
+IF %SERVER%==1 GOTO INSTALLTF2
+IF %SERVER%==2 GOTO INSTALLGMOD
+IF %SERVER%==3 GOTO INSTALLCSS
+IF %SERVER%==4 GOTO INSTALLCSGO
+IF %SERVER%==5 GOTO INSTALLOTHER
+IF %SERVER%==home GOTO MENU
+GOTO MENU
+:INSTALLTF2
+CLS
+cd %steamcmddir%
+steamcmd +login anonymous +force_install_dir "C:\Servers\Team Fortress 2" +app_update 232250 validate +quit
+ECHO Team Fortress 2 has been successfully installed/updated in the directory "C:\Servers\Team Fortress 2"
+pause
+GOTO MENU
+:INSTALLGMOD
+CLS
+cd %steamcmddir%
+steamcmd +login anonymous +force_install_dir "C:\Servers\Garry's Mod" +app_update 4020 validate +quit
+ECHO Garry's Mod has been successfully installed/updated in the directory "C:\Servers\Garry's Mod"
+pause
+GOTO MENU
+:INSTALLCSS
+CLS
+cd %steamcmddir%
+cd "C:\program files (x86)\valve\hlserver"
+steamcmd +login anonymous +force_install_dir "C:\Servers\Counter-Strike: Source" +app_update 232330 validate +quit
+ECHO Counter-Strike: Source has been successfully installed/updated to the directory "C:\Servers\Counter-Strike: Source".
+pause
+GOTO MENU
+:INSTALLCSGO
+CLS
+cd %steamcmddir%
+steamcmd +login anonymous +force_install_dir "C:\Servers\Counter-Strike: Global Offensive" +app_update 740 validate +quit
+ECHO Counter-Strike: Globall Offensive has been successfully installed/updated to the directory "C:\Servers\Counter-Strike: Global Offensive".
+pause
+GOTO MENU
+:INSTALLOTHER
+CLs
+ECHO.
+ECHO What update tool is the server on?
+ECHO.
+ECHO 1 - HLDSUpdateTool
+ECHO 2- SteamCMD
+ECHO.
+set /p software=Type the number of the option here, or type "back" to go to the previous menu:
+IF %software%==1 GOTO HLDS
+IF %software%==2 GOTO steamcmd
+IF %software%==back GOTO INSTALL/UPDATE
+IF %software%==home GOTO MENU
+:hlds
+ECHO.
+set /p hldsname=What is the exact name of the server you would like to install?
+cd "C:\program files (x86)\valve\hlserver\"
+hldsupdatetool.exe -command update -game %hldsname% -dir "C:\Servers\%hldsname%"
+ECHO %hldsname% has been successfully installed/updated to the directory "C:\Servers\%hldsname%"
+pause
+goto MENU
+:steamcmd
+echo.
+set /p steamcmdname=What is the name of the server you would like to install?
+set /p steamcmdappid=What is the appid of the server you would like to install?
+cd %steamcmddir%
+steamcmd +login anonymous +force_install_dir "C:\Servers\%steamcmdname%\ app_update %steamcmdappid% validate +quit
+echo %steamcmdname% has been successfully installed/updated to the directory "C:\Servers\%steamcmdname%\".
+pause
+goto MENU
+:404
+echo.
+echo Sorry, this feature is not done yet. You will be returned to the main menu.
+pause
+goto MENU
+
+:ABOUT
+CLS
+ECHO.
+ECHO The neXus Source Server manager was developed by DesertStormer27 to make installing, updating, and managing source servers easy and fast. Hopefully the NSSM will be updated to a more powerful language (Currently, it is just a big batch file). Something such as Python seems like it would be easiest, but it is not the only option. For now, this will work fine.
+ECHO.
+ECHO NOTE: In order for this program to work properly, you need both "HLDSUpdateTool" and "SteamCMD". Both can be found on the Valve Developer Community Website.
+ECHO.
+ECHO Thank you for using the NSSM. If you have any bug reports, or suggestions: contact me at desertstormerj@aol.com.
+pause
+GOTO MENU
+:ANSWER
+ECHO.
+ECHO That is the answer to life, the universe, and everything.
+GOTO MENU
+:EOS
+exit
