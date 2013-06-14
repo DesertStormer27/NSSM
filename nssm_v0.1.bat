@@ -5,6 +5,22 @@ CLS
 ::Change this variable to change the location of the SteamCMD installation!
 set steamcmddir=C:\Program Files (x86)\SteamCMD\
 
+::Log into steam servers
+echo.
+echo Would you like to log into Steam Servers, or just be anonymous?
+echo 1 - Log In
+echo 2 - Be anonymous
+set /p login=Please type the number of your answer here: 
+IF %login%==1 GOTO LOGIN
+IF %login%==2 GOTO anonlogin
+:login
+set /p username=What is your username?
+set /p password=What is your password?
+set logindetails=%username% %password%
+goto MENU
+:anonlogin
+set logindetails=anonymous
+goto MENU
 
 set programname=neXus Source Server Manager v0.1
 color a
@@ -65,29 +81,28 @@ GOTO MENU
 :INSTALLTF2
 CLS
 cd %steamcmddir%
-steamcmd +login anonymous +force_install_dir "C:\Servers\Team Fortress 2" +app_update 232250 validate +quit
+steamcmd +login %logindetails% +force_install_dir "C:\Servers\Team Fortress 2" +app_update 232250 validate +quit
 ECHO Team Fortress 2 has been successfully installed/updated in the directory "C:\Servers\Team Fortress 2"
 pause
 GOTO MENU
 :INSTALLGMOD
 CLS
 cd %steamcmddir%
-steamcmd +login anonymous +force_install_dir "C:\Servers\Garry's Mod" +app_update 4020 validate +quit
+steamcmd +login %logindetails% +force_install_dir "C:\Servers\Garry's Mod" +app_update 4020 validate +quit
 ECHO Garry's Mod has been successfully installed/updated in the directory "C:\Servers\Garry's Mod"
 pause
 GOTO MENU
 :INSTALLCSS
 CLS
 cd %steamcmddir%
-cd "C:\program files (x86)\valve\hlserver"
-steamcmd +login anonymous +force_install_dir "C:\Servers\Counter-Strike: Source" +app_update 232330 validate +quit
+steamcmd +login %logindetails% +force_install_dir "C:\Servers\Counter-Strike: Source" +app_update 232330 validate +quit
 ECHO Counter-Strike: Source has been successfully installed/updated to the directory "C:\Servers\Counter-Strike: Source".
 pause
 GOTO MENU
 :INSTALLCSGO
 CLS
 cd %steamcmddir%
-steamcmd +login anonymous +force_install_dir "C:\Servers\Counter-Strike: Global Offensive" +app_update 740 validate +quit
+steamcmd +login %logindetails% +force_install_dir "C:\Servers\Counter-Strike: Global Offensive" +app_update 740 validate +quit
 ECHO Counter-Strike: Globall Offensive has been successfully installed/updated to the directory "C:\Servers\Counter-Strike: Global Offensive".
 pause
 GOTO MENU
