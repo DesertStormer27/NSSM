@@ -42,7 +42,7 @@ ECHO Welcome to the neXus Source Server Manager. Select your task below.
 ECHO.
 ECHO Note- during any menu, type "home" to return to this menu.
 ECHO.
-ECHO Current version= 0.1
+ECHO Current version= 0.5
 ECHO ...............................................
 ECHO.
 ECHO 1 - Install/Update a server
