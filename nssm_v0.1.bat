@@ -81,7 +81,7 @@ GOTO MENU
 :INSTALLTF2
 CLS
 cd %steamcmddir%
-steamcmd +login %logindetails% +force_install_dir "C:\Servers\Team Fortress 2" +app_update 232250 validate +quit
+steamcmd +login %logindetails% +force_install_dir "C:\Servers\tf2" +app_update 232250 validate +quit
 ECHO Team Fortress 2 has been successfully installed/updated in the directory "C:\Servers\Team Fortress 2"
 pause
 GOTO MENU
@@ -95,14 +95,14 @@ GOTO MENU
 :INSTALLCSS
 CLS
 cd %steamcmddir%
-steamcmd +login %logindetails% +force_install_dir "C:\Servers\Counter-Strike: Source" +app_update 232330 validate +quit
+steamcmd +login %logindetails% +force_install_dir "C:\Servers\css" +app_update 232330 validate +quit
 ECHO Counter-Strike: Source has been successfully installed/updated to the directory "C:\Servers\Counter-Strike: Source".
 pause
 GOTO MENU
 :INSTALLCSGO
 CLS
 cd %steamcmddir%
-steamcmd +login %logindetails% +force_install_dir "C:\Servers\Counter-Strike: Global Offensive" +app_update 740 validate +quit
+steamcmd +login %logindetails% +force_install_dir "C:\Servers\csgo" +app_update 740 validate +quit
 ECHO Counter-Strike: Globall Offensive has been successfully installed/updated to the directory "C:\Servers\Counter-Strike: Global Offensive".
 pause
 GOTO MENU
