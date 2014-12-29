@@ -132,7 +132,7 @@ echo.
 set /p steamcmdname=What is the name of the server you would like to install?
 set /p steamcmdappid=What is the appid of the server you would like to install?
 cd %steamcmddir%
-steamcmd +login anonymous +force_install_dir "C:\Servers\%steamcmdname%\ app_update %steamcmdappid% validate +quit
+steamcmd +login anonymous +force_install_dir "C:\Servers\%steamcmdname%\" app_update %steamcmdappid% validate +quit
 echo %steamcmdname% has been successfully installed/updated to the directory "C:\Servers\%steamcmdname%\".
 pause
 goto MENU
